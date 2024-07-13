@@ -6,16 +6,21 @@ const socketIo = require('socket.io');
 const connectDB = require('./config/database');
 const productRoutes = require('./routes/productRoutes');
 const Product = require('./models/Product');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
-app.use(cors());
 const server = http.createServer(app);
+
+const corsOptions = {
+  origin: ['https://product-management-frontend-9g95k7b6v.vercel.app', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+
 const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:3000", 
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-  }
+  cors: corsOptions
 });
 
 console.log("Server starting...");
@@ -27,13 +32,17 @@ console.log("test");
 
 // mongoose connection
 connectDB();
+
 // routes
 app.use('/products', productRoutes);
+//app.use('/api/auth', authRoutes);
+
 
 // socket io
 io.on('connection', (socket) => {
-  console.log('New client connected');
-  socket.on('disconnect', () => console.log('Client disconnected'));
+  console.log('New client connected:', socket.id);
+  socket.on('error', (error) => console.error('Socket error:', error));
+  socket.on('disconnect', (reason) => console.log('Client disconnected:', reason));
 });
 
 app.set('io', io);

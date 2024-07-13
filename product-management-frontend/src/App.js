@@ -4,7 +4,8 @@ import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const socket = io(API_URL);
 
 function App() {
   const [isFormOpen, setIsFormOpen] = useState(false);
