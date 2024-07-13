@@ -59,10 +59,10 @@ A simple RESTful API built with Node.js and Express for managing products using 
 
 ### API Endpoints
 
--   **GET** `/api/products` - Retrieve all products
--   **POST** `/api/products` - Create a new product
--   **PUT** `/api/products/:id` - Update an existing product
--   **DELETE** `/api/products/:id` - Delete a product
+-   **GET** `/products` - Retrieve all products
+-   **POST** `/products` - Create a new product
+-   **PUT** `/products/:id` - Update an existing product
+-   **DELETE** `/products/:id` - Delete a product
 
 ### Frontend
 
